@@ -15,3 +15,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.table-content th,
+.table-content td {
+  border: 2px solid #3d3d3d;
+  width: 30%;
+  padding: 7px;
+  font-size: 20px;
+  text-align: left;
+}

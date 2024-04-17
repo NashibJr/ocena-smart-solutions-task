@@ -20,8 +20,8 @@ const Input: React.FC<IProps> = ({ label, isSelect = false, ...props }) => {
           className="p-[6px] w-full outline-none border border-[#d3d3d3] rounded-md"
           {...props}
         >
-          <option value="mtech">M.tech</option>
-          <option value="btech">B.tech</option>
+          <option value="M.tech">M.tech</option>
+          <option value="B.tech">B.tech</option>
         </select>
       )}
     </label>
