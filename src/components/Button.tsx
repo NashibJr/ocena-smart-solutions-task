@@ -9,7 +9,7 @@ type IProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 const Button: React.FC<IProps> = ({ label, btnColor, loading, ...props }) => {
   return (
     <button
-      className={`p-[6px] text-white rounded-md hover:opacity-75 ${
+      className={`p-[6px] text-white rounded-md hover:opacity-75 outline-none ${
         btnColor ? btnColor : "bg-[dodgerblue]"
       }`}
       {...props}

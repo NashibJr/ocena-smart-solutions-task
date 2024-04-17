@@ -19,7 +19,6 @@ const Input: React.FC<IProps> = ({ label, isSelect = false, ...props }) => {
         <select
           className="p-[6px] w-full outline-none border border-[#d3d3d3] rounded-md"
           {...props}
-          defaultValue="mtech"
         >
           <option value="mtech">M.tech</option>
           <option value="btech">B.tech</option>
