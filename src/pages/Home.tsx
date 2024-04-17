@@ -7,6 +7,7 @@ import { btechRows, mtechRows } from "../components/constants";
 import generatePDF from "react-to-pdf";
 import jsPDF from "jspdf";
 import ShouldRender from "../components/ShouldRender";
+import { RowProps } from "../components/Row";
 
 interface UserProps {
   name: string;
@@ -17,22 +18,27 @@ const Home = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = React.useState<boolean>(false);
   const [user, setUser] = React.useState<UserProps>({
-    course: "M.Tech",
+    course: "M.tech",
     name: "",
   });
   const [values, setValues] = React.useState<UserProps>({
     course: "",
     name: "",
   });
+  const [rows, setRows] = React.useState<RowProps[]>([]);
+  const [reference, setReference] = React.useState<string>("");
+  const [disable, setDisable] = React.useState<boolean>(true);
   const targetRef = React.useRef<HTMLDivElement | null>(null);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) =>
+  ) => {
     setUser((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
     }));
+    setDisable(true);
+  };
 
   const handleSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,6 +50,7 @@ const Home = () => {
     console.log(user);
     setIsSubmitted(true);
     setLoading(false);
+    setDisable(false);
   };
 
   const handleGeneratePDF = async (): Promise<InstanceType<typeof jsPDF>> => {
@@ -54,6 +61,19 @@ const Home = () => {
 
     return generate;
   };
+
+  React.useEffect(() => {
+    if (values.name) {
+      if (values.course === "M.tech") {
+        setRows(mtechRows);
+        setReference("Ref-B101");
+      }
+      if (values.course === "B.tech") {
+        setRows(btechRows);
+        setReference("Ref-A101");
+      }
+    }
+  }, [values.name, values.course]);
 
   return (
     <>
@@ -92,7 +112,7 @@ const Home = () => {
                 btnColor="bg-green-600"
                 type="button"
                 onClick={handleGeneratePDF}
-                disabled={!values.course || !values.name}
+                disabled={disable}
               />
             </div>
           </form>
@@ -103,16 +123,8 @@ const Home = () => {
           <PageToPrint
             course={values.course}
             username={values.name}
-            reference={`${
-              values.course === "M.tech" ? "Ref-B101" : "Ref-A101"
-            }`}
-            rows={
-              values.name
-                ? values.course !== "M.tech"
-                  ? mtechRows
-                  : btechRows
-                : []
-            }
+            reference={reference}
+            rows={rows}
           />
         </div>
       </ShouldRender>
