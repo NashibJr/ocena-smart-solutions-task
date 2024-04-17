@@ -57,7 +57,8 @@ const Home = () => {
     const generate = await generatePDF(targetRef, { filename: "admission" });
     alert("Successfully generaretd!!");
     setIsSubmitted(false);
-    setUser((prevState) => ({ ...prevState, name: "", course: "M.Tech" }));
+    setUser((prevState) => ({ ...prevState, name: "", course: "M.tech" }));
+    setDisable(true);
 
     return generate;
   };
